@@ -7,8 +7,8 @@ A simple guide for packaging and running Go applications in AWS Lambda using Doc
 #### 📂 Clone the repository
 
 ```sh
-git clone https://github.com/georgelopez7/<add-here>.git
-cd add-here
+git clone https://github.com/georgelopez7/aws-lambda-go-tutorial.git
+cd aws-lambda-go-tutorial
 ```
 
 #### 🔨 Build the project
