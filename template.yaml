@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  aws-lambda-go-tutorial
+
+Parameters:
+  Environment:
+    Type: String
+    Default: staging
+    AllowedValues:
+      - staging
+      - production
+    Description: Deployment environment (staging or production) for the API Gateway
+
+Globals:
+  Function:
+    Timeout: 5
+
+Resources:
+  LambdaGoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      Events:
+        PostRequest:
+          Type: Api
+          Properties:
+            Path: /submit
+            Method: post
+            RestApiId: !Ref APIGateway
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: ./lambda
+
+  APIGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref Environment
+
+Outputs:
+  APIGateway:
+    Description: "API Gateway Endpoint URL"
+    Value: !Sub "https://${APIGateway}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/submit"
